@@ -1,0 +1,24 @@
+---
+title: "Audience Screen Engagement Tracker"
+search: false
+toc: false
+listing:
+  - id: reports
+    contents: 
+    - reports
+    sort: "date desc"
+    type: default
+    categories: false
+    sort-ui: false
+    filter-ui: false
+    page-size: 30
+---
+
+The **Audience Screen Engagement Tracker** was commissioned through the BFI Research and Statistics Fund, awarding National Lottery funding. The survey, conducted in partnership with YouGov, provides up-to-date behavioural, motivational, and attitudinal benchmark metrics on how audiences are engaging with screens and screen content, building on previous BFI audience research. Fieldwork took place during the second half of March 2025.
+
+## Reports
+
+::: {#reports}
+:::
+
+![](typst_output/bfi_nl_logo.png){fig-align="center" height="2cm"}

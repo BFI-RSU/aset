@@ -1,0 +1,647 @@
+---
+title: "Small screens, big focus"
+subtitle: "How mobile devices are (re)shaping screen engagement"
+description: "In this report, we explore how the proliferation of mobile devices is changing UK adults’ relationship with screen content and what role smartphones play in a landscape previously dominated by cinema and TV screens."
+author: Paul McEvoy and Brian Tarran
+date: 5/11/2026
+date-format: long
+image: thumbnail.png
+image-alt: "Screengrab of Figure 4 of the report, showing favourite types of screen content of adults aged 16-24."
+execute: 
+  echo: false
+  warning: false
+knitr:
+  opts_chunk:
+    dev: "ragg_png"
+format:
+  html: default
+  typst:
+    template-partials: 
+      - ../../typst_output/typst-show.typ
+      - ../../typst_output/typst-template.typ
+    header-includes: |
+      #set page(
+        background: [
+          #place(
+            top + left,
+            dx: 10pt,
+            dy: 10pt
+          )[
+            #image("../../typst_output/bfi_nl_logo.png", height: 2cm)
+          ]
+        ],
+        footer: [
+          #set text(font: "Source Sans 3", size: 9pt, fill: luma(100))
+          #grid(
+            columns: (1fr, 1fr, 1fr),
+            align: (left, center, right),
+            [],
+            link("https://www.bfi.org.uk/industry-data-insights")[bfi.org.uk/industry-data-insights],
+            context counter(page).display("1")
+          )
+        ]
+      )
+    grid:
+      margin-width: 0.5in
+      body-width: 7.5in
+      gutter-width: 0in
+---
+
+::: {.content-visible when-format="typst"}
+## Note
+An interactive version of this report, including downloadable data, is available at [bfi-rsu.github.io/aset](https://bfi-rsu.github.io/aset/reports/small_screens_big_focus/).
+:::
+
+## Headlines
+According to the BFI's latest Audience Screen Engagement Tracker:
+
+*	Young adults aged 16--24 are more likely than adults of all ages to engage with all types of content on their smartphone devices – feature films, scripted TV shows, short-form videos on social media, and video games (@fig-reach). They are more than three times as likely to watch feature films on their mobile devices – both in and out of home – compared with older adults (those aged 55 and above).
+*	Watching YouTube and short-form videos on social media are the favourite types of screen content among 16--24-year-olds (@fig-favourites), and viewing is habitual – young adults are approximately twice as likely as all adults to watch short-form content on social media daily or multiple times a day using smartphones (@fig-habitual).
+*	Among 16--24-year-olds, watching films at home ranks as the third favourite type of screen content. But films watched in living rooms and bedrooms may be competing for attention: 67% of young adults say they use their smartphones at least some of the time when watching screen content on TVs, laptops and iPads, while 20% say they do so all the time (@tbl-dual-screen).
+*	Smartphone use is not dulling appetite for other kinds of content: among adults of all ages, habitual viewers of short-form video are more likely to be regular viewers of almost all other types of screens and content (@fig-habitual-sf). 
+*	But social media and other forms of creator content may be shifting the behaviours and expectations of younger audiences: 48% of 16--24-year-olds say they want more screen content choices, while 47% say the content they watch needs to be relevant, personalised and meaningful to them (@fig-statements).
+*	Young adults are also split on whether shorter forms of content, such as social media videos, are more engaging than films: 36% agree; 39% disagree.
+
+## Three takeaways
+1.	For filmmakers and screen storytellers, audiences can be found everywhere – at home, in big-screen venues and on the go. But in certain spaces your stories will be battling for attention.
+2.	Cinema is different. Young adults like the focused experience that cinema provides: only 14% want exhibitors to be more flexible about audience behaviour, such as allowing talking or use of smartphones. Young adults are also more likely than all adults to describe past cinema visits as a social outing and as an opportunity to connect with friends and family (@fig-drivers).
+3. Relevant, tailored screen content and distinct, memorable in-venue experiences matter to young adults: 47% of 16--24-year-olds agree that screen content needs to be personalised and meaningful to them; 21% disagree. The appeal of targeted and relatable screen content means we now see short-form content close to outperforming (legacy) long-form content in the preferred engagement stakes. 
+
+**The challenge:** How can storytellers and exhibitors meet the needs of young audiences for more screen content choices, relevant and personalised experiences, and opportunities for social connection?
+
+## Smartphone viewing has biggest reach among young adults
+The BFI’s latest Audience Screen Engagement Tracker was conducted in partnership with YouGov and commissioned through the BFI's Research and Statistics Fund, awarding National Lottery funding. We set out to understand how the proliferation of mobile devices is changing UK adults’ relationship with screen content, and to understand the role smartphones play in a landscape previously dominated by cinema and TV screens.
+
+Our survey asked about people’s engagement with different types of screen content – feature films, scripted TV series, video games and short-form content on social media – and about how they view those types of content – at the cinema, at home on TVs, tablets and laptops, and on their smartphone devices, both in- and out-of-home. Our core questionnaire was completed by more than 12,000 UK adults aged 16 and above in the second half of March 2025.
+
+Across all adults, viewing feature films at home on a TV or other device (excluding smartphones) had the widest reach: 65% of adults watched a film this way over a 12-month period. Scripted TV drama (scripted fiction), short-form social media videos on smartphones, and feature films at the cinema also reached a majority of the population.
+
+Aggregate figures for all adults mask a generational divide, however. Audiences aged 16--24 were between two and six times as likely as older adults (aged 55+) to engage with all types of content on smartphone devices: film, scripted TV, short-form social videos, and video games (@fig-reach).
+
+```{r}
+#| label: prep-data
+#| file: R/data_prep.R
+
+library(dplyr)
+```
+```{r}
+#| label: prep-graphs
+#| file: R/graphs.R
+
+```
+
+```{r}
+#| label: set-file-path
+
+file_path <- here::here('../../data/small_screen_data_final.xlsx')
+
+```
+
+<div aria-label="Figure 1 is an interactive plot. Grouped bars show % who engaged with content in the past year by screen -- big screen, smartphone at home, smartphone out of home, and TV/laptop/tablet; with age markers for 16–24 (pink) and 55+ (blue). Across adults, reach is highest for short‑form on smartphones at home (57%) and for films/scripted TV on TV/laptop/tablet (feature films 65%, scripted TV 60%). 16–24s over‑index for short‑form on smartphones (80% at home and 79% out of home) and for video games on smartphones, TVs, laptops or tablets; 55+ are consistently lower, especially on smartphones. Feature films on the big screen reach about half of adults (51%), with 16–24 slightly higher and 55+ lower."></div>
+
+```{r}
+#| label: fig-reach
+#| fig-cap: Audiences aged 16-24 are between two and six times as likely as older adults (aged 55+) to engage with all types of content on smartphone devices – film, scripted TV, video games and short-form videos. 
+#| fig-width: 12
+#| fig-height: 6
+#| fig-align: center
+#| fig-dpi: 150
+#| column: page
+
+sheet_name <- "fig-reach"
+data <- load_data_screens_content()
+
+data <- data %>%
+  mutate(screen_type = factor(screen_type, levels = c("Big screen", "TV, laptop or tablet", "Smartphone (at home)", "Smartphone (out of home)")))
+
+plot_vertical_bar_grouped(
+  data = data,
+  screen_var = "screen_type",
+  content_var = "content_type",
+  y_var = "percentage",
+  groups = "age_group",
+  main_group = "all_adults",
+  main_group_tooltip_label = "All adults",
+  title = "Content engagement, 12-month reach (%) by screen size",
+  subtitle = "All adults compared with those <span style='color:#e50076'>aged 16-24</span> and those <span style='color:#1197FF'>aged 55 and above</span>.",
+  comparison_group_1 = "16_24",
+  comparison_group_1_tooltip_label = "Adults aged 16-24",
+  comparison_group_2 = "55_plus",
+  comparison_group_2_tooltip_label = "Adults aged 55 and above"
+)
+```
+
+As well as asking about the types of content people watch, and on what screen formats, our survey also asked about frequency of viewing – daily, weekly, monthly, and so on. From this, we identified smartphone-based viewing of short-form videos as the most habitual type of viewing ("habitual" meaning at least daily), followed by smartphone-based gaming at home. Almost a quarter (24%) of adults said they watched short-form videos on their mobile devices at home at least once per day, while 20% did so while out-of-home. Again, we see a divide between younger and older age groups, with 45% of 16--24-year-olds watching short-form videos on phones at least daily when at home, compared with 9% of those aged 55 and above (@fig-habitual).
+
+<div aria-label="Figure 2 is an interactive plot. Small multiples showing daily reach. For adults, daily use is highest for short‑form video on smartphones (24% at home; 20% out of home), video games across screens (12–18% and by scripted TV on TV/laptop/tablet (13%). Daily viewing of feature films is low across screens (4–8%). 16–24s (pink) are far more likely to use short‑form on smartphones daily (45% at home)."></div>
+
+```{r}
+#| label: fig-habitual
+#| fig-cap: Almost a quarter (24%) of adults said they watched short-form videos on their mobile devices at home at least once per day, while 20% did so while out-of-home.
+#| fig-width: 12
+#| fig-height: 6
+#| fig-align: center
+#| fig-dpi: 150
+#| column: page
+
+sheet_name <- "fig-habitual"
+data <- load_data_screens_content()
+
+data <- data %>%
+  mutate(screen_type = factor(screen_type, levels = c("Big screen", "TV, laptop or tablet", "Smartphone (at home)", "Smartphone (out of home)")))
+
+plot_vertical_bar_grouped(
+  data = data %>% filter(screen_type != "Big screen"),
+  screen_var = "screen_type",
+  content_var = "content_type",
+  y_var = "percentage",
+  groups = "age_group",
+  main_group = "all_adults",
+  main_group_tooltip_label = "All adults",
+  title = "Habitual content engagement (at least once per day) by screen size",
+  subtitle = "All adults compared with those <span style='color:#e50076'>aged 16-24</span> and those <span style='color:#1197FF'>aged 55 and above</span>.",
+  comparison_group_1 = "16_24",
+  comparison_group_1_tooltip_label = "Adults aged 16-24",
+  comparison_group_2 = "55_plus",
+  comparison_group_2_tooltip_label = "Adults aged 55 and above",
+  y_limits = c(0,60)
+)
+```
+
+Our survey does not suggest that short-form video viewers are turning away from other types of screen content. Compared with adults overall, habitual (daily) viewers of short-form videos at home on smartphones are more likely to be regular (daily, weekly or monthly) viewers of almost all other types of content across screen devices – the exception being watching films at home on TV channels (@fig-habitual-sf). We also see, among all adults, the same percentage (12%) choosing to regularly watch films out of home on their phones as in the cinema.
+
+<div aria-label="Figure 3 is an interactive plot. Small multiples (film; scripted TV; short form) showing % who engage at least regularly (daily, weekly or monthly); markers highlight ‘short‑form fans’ – those who watch short-form content at home on smartphones habitually (daily). For all adults, regular film watching is mainly ‘at home on TV/laptop/tablet’ (44%), with low figures for smartphone and physical media. Scripted TV shows a similar pattern (46% at home on TV; <20% on smartphones). Short‑form content is engaged with across devices, led by smartphones ‘at home’ and ‘out of home’ (46% and 43%). Short‑form fans are higher than average across almost all locations, particularly on smartphones."></div>
+
+```{r}
+#| label: fig-habitual-sf
+#| fig-cap: Compared with adults overall, habitual (daily) viewers of short-form videos at home on on smartphones are more likely to be regular (daily, weekly or monthly) viewers of almost all other types of content across screen devices
+#| fig-width: 12
+#| fig-height: 9
+#| fig-align: center
+#| fig-dpi: 150
+#| column: page
+
+sheet_name <- "fig-habitual-sf"
+data <- load_data_content_location()
+
+data <- data %>%
+  mutate(content_type = factor(content_type, levels = c("Feature film", "Short form", "Scripted TV", "Video games", "Immersive")))
+
+p1 <- plot_vertical_bar_grouped(
+  data = data %>% filter(content_type == "Feature film"),
+  screen_var = "content_type",
+  content_var = "location",
+  y_var = "percentage",
+  groups = "viewer_type",
+  main_group = "all_adults",
+  main_group_tooltip_label = "All adults",
+  comparison_group_1 = "habitual_shortform_on_smartphone_at_home",
+  comparison_group_1_tooltip_label = "Short-form fans",
+  y_limits = c(0, 100),
+  number_of_rows = 2
+)
+
+p2 <- plot_vertical_bar_grouped(
+  data = data %>% filter(content_type == "Scripted TV"),
+  screen_var = "content_type",
+  content_var = "location",
+  y_var = "percentage",
+  groups = "viewer_type",
+  main_group = "all_adults",
+  main_group_tooltip_label = "All adults",
+  comparison_group_1 = "habitual_shortform_on_smartphone_at_home",
+  comparison_group_1_tooltip_label = "Short-form fans",
+  number_of_rows = 2,
+)
+
+p3 <- plot_vertical_bar_grouped(
+  data = data %>% filter(content_type == "Short form"),
+  screen_var = "content_type",
+  content_var = "location",
+  y_var = "percentage",
+  groups = "viewer_type",
+  main_group = "all_adults",
+  main_group_tooltip_label = "All adults",
+  comparison_group_1 = "habitual_shortform_on_smartphone_at_home",
+  comparison_group_1_tooltip_label = "Short-form fans",
+  number_of_rows = 2,
+)
+
+is_html <- knitr::is_html_output()
+
+if (!is_html) {
+
+  combined <- (p1) / (p2 | p3) + 
+  plot_annotation(
+    title = "Content type by location and format, % engaging at least regularly (daily, weekly or monthly)",
+    subtitle = "All adults compared with <span style='color:#e50076'>habitual (daily) viewers of short-form content at home on smartphones (short-form fans)</span>.",
+  ) & 
+  theme(
+    plot.title = element_markdown(size = 16),
+    plot.subtitle = element_markdown(size = 16 * 0.8)
+  )
+
+  plot(combined)
+
+} else {
+
+  htmltools::tagList(
+    htmltools::div(
+      style = "
+        text-align: left;
+        margin-top: 40px;
+        margin-left: 45px;
+        font-family: 'Source Sans 3', sans-serif;
+        ",
+      htmltools::tags$div(
+        style = "
+          font-size: 18px;
+          font-weight: 400;
+          ",
+        "Content type by location and format, % engaging at least regularly (daily, weekly or monthly)",
+      ),
+      htmltools::tags$div(
+        style = "font-size: 14px; opacity: 0.8;", 
+        "All adults compared with ", 
+        htmltools::HTML(paste0(
+          htmltools::tags$span(style = "color:#e50076;", "habitual (daily) viewers of short-form content at home on smartphones (short-form fans)"), "."))
+      ),
+    ),
+    htmltools::div(
+      style = "display:flex; gap:10px;",
+      p1
+    ),
+    htmltools::div(
+      style = "display:flex; gap:10px;",
+      p2,
+      p3
+    )
+  )
+}
+```
+
+This finding suggests that short-form video viewers are voracious consumers of screen content in all its forms – facilitated, perhaps, by the practice of "dual screening": viewing two or more screens at once. 
+
+Following on from our core questionnaire, we fielded a dedicated survey module to a nationally representative sample of more than 500 young adults aged 16--24. Fieldwork took place in the second half of August 2025. This survey module found that 20% of young adults dual screen all the time when watching screen content at home, while 67% do so some of the time. So, even when watching film or scripted TV at home, viewer attention may be split between multiple devices (@tbl-dual-screen).
+
+::: {style="width:70%; margin:auto;"}
+```{r}
+#| label: tbl-dual-screen
+#| tbl-cap: Almost 9 in 10 adults aged 16-24 say they use their mobile phones at least "sometimes" when watching screen content at home.
+
+sheet_name <- "tbl-dual-screen"
+simple_table()
+```
+:::
+
+## Mobile-first content are the top choices for young audiences
+Our young adult survey module also asked about favourite types of screen content. Mobile-first formats, specifically YouTube videos and short-form videos on social media platforms, emerged as clear favourites, followed by viewing of film at home on TV sets or other devices (excluding smartphones), playing video games, and watching films at the cinema -- a favourite of one in four young adults (@fig-favourites).
+
+<div aria-label="Figure 4 is an interactive plot. Horizontal bar chart of favourite content among 16–24s. Top choices are watching videos on YouTube (58%) and short‑form videos on social platforms (48%). Film viewing ranks lower – films at home on TV/small screens 40%, films at a cinema 27%, films on a smartphone 11%, IMAX 4%. Gaming is also popular (37%). Few report no favourite (2%) or don’t know (1%)."></div>
+
+```{r}
+#| label: fig-favourites
+#| fig-cap: Mobile-first formats, specifically YouTube videos and short-form videos on social media platforms, emerged as the favourite screen content choices among adults aged 16-24. Watching films at home and at the cinema were among the top 5.
+#| fig-width: 12
+#| fig-height: 8
+#| fig-align: center
+#| fig-dpi: 150
+#| column: page
+
+sheet_name <- "fig-favourites"
+data <- load_data()
+
+plot_horizontal_bar (
+  data = data,
+  category_var = "content_type",      
+  value_var = "16_24",
+  value_var_tooltip_label = "Adults aged 16-24",            
+  keyword = "film",       
+  highlight_color = "#e50076",  
+  base_color = "grey70",        
+  title = "Favourite types of screen content",
+  subtitle = "% of adults aged 16-24. <span style='color:#e50076'>Film viewing</span> preferences are highlighted.",
+  label_format = scales::comma,
+  wrap_width = 40
+)
+```
+
+The popularity of mobile-first formats is unsurprising, given that the majority of young adult respondents reported watching video content on Instagram (64%), YouTube (60%) and TikTok (53%) at least daily (whether at home or out of home, on any device). Among those who use these platforms multiple times a day, YouTube is most popular among males, while TikTok and Instagram are preferred by females (@fig-social).
+
+<div aria-label="Figure 5 is an interactive plot. Grouped bars show % of 16-24s who watch video multiple times a day by platform, whether at home or out of home, on any device. Instagram – around half overall (46%), slightly higher among females (48%) than males (41%). TikTok – higher among females (55%) than males (33%). YouTube – higher among males (58%) than females (32%); overall 46%."></div>
+
+```{r}
+#| label: fig-social
+#| fig-cap: Among those young adults who watch video on social media platforms multiple times a day, YouTube is most popular among males, while TikTok and Instagram are preferred by females.
+#| fig-width: 12
+#| fig-height: 6
+#| fig-align: center
+#| fig-dpi: 150
+#| column: page
+
+sheet_name <- "fig-social"
+data <- load_data_social()
+
+plot_vertical_bar_grouped (
+  data = data,
+  screen_var = "social_platform",           
+  content_var = "sex",          
+  y_var = "percentage",
+  title = "Video viewing habits on social media platforms, watching at home or out of home on any device",
+  subtitle = "% aged 16-24 watching multiple times a day.",                
+  label_format = scales::comma,
+  y_limits = c(0, 100),
+  wrap_width = 20,
+  facet_ncol = 3,
+  main_group_tooltip_label = "Percentage aged 16-24 watching multiple times a day"
+)
+```
+
+In our core questionnaire, when asked about types of films watched by location and method, young adults were more likely to report viewing a broader array of feature film types at home than at cinemas and other big-screen venues, where mainstream Hollywood releases proved most popular (@fig-film-types). 
+
+When looking at engagement by type of film, greater proportions of young adults than all adults engaged with big-screen- and smartphone-based film viewing, while smaller proportions of young adults engaged with film viewing on TV sets and other devices (excluding smartphones).
+
+Compared with viewers of all other types of film, a greater proportion of short film viewers watched short films on smartphones. This may point to a genuine preference for this type of film on mobile devices, or it may be due to how respondents chose to interpret "short film" – being, perhaps, a more ambiguous term in an era of short-form content. 
+
+<div aria-label="Figure 6 is an interactive plot. Four small multiples by location. Watching at home on a TV/laptop/tablet dominates for all film types (69–82% reach across genres, slightly lower for 16–24s). Big‑screen viewing varies by type and is strongest for mainstream Hollywood (51%) and animated titles (32%), lower for documentaries (9%). Viewing on smartphones – at home or out of home – is much lower overall (typically <20%)."></div>
+
+```{r}
+#| label: fig-film-types
+#| fig-cap: Viewing of mainstream Hollywood releases on the big screen is higher than for other types of film -- 51% of all adults and 59% of young adults who watched a Hollywood film in the past 12 months did so at the cinema. The comparable figures for British film are 27% and 36%.
+#| fig-width: 12
+#| fig-height: 9
+#| fig-align: center
+#| fig-dpi: 150
+#| column: page
+
+sheet_name <- "fig-film-types"
+data <- load_data_screens_films()
+
+data <- data %>%
+  mutate(screen_type = factor(screen_type, levels = c("Big screen (cinema or other out-of-home venue)", "At home (on TV set, laptop or iPad)", "At home (on smartphone)", "Out of home (on smartphone)")))
+
+p1 <- plot_vertical_bar_grouped(
+  data = data %>% filter(screen_type == "Big screen (cinema or other out-of-home venue)"),
+  screen_var = "screen_type",
+  content_var = "film_type",
+  y_var = "percentage",
+  groups = "age_group",
+  main_group = "all_adults",
+  main_group_tooltip_label = "All adults",
+  wrap_width = 35,
+  comparison_group_1 = "16_24",
+  comparison_group_1_tooltip_label = "Adults aged 16-24",
+  y_limits = c(0, 100),
+  number_of_rows = 2
+)
+
+p2 <- plot_vertical_bar_grouped(
+  data = data %>% filter(screen_type == "At home (on TV set, laptop or iPad)"),
+  screen_var = "screen_type",
+  content_var = "film_type",
+  y_var = "percentage",
+  groups = "age_group",
+  main_group = "all_adults",
+  main_group_tooltip_label = "All adults",
+  wrap_width = 35,
+  comparison_group_1 = "16_24",
+  comparison_group_1_tooltip_label = "Adults aged 16-24",
+  y_limits = c(0, 100),
+  number_of_rows = 2
+)
+
+p3 <- plot_vertical_bar_grouped(
+  data = data %>% filter(screen_type == "At home (on smartphone)"),
+  screen_var = "screen_type",
+  content_var = "film_type",
+  y_var = "percentage",
+  groups = "age_group",
+  main_group = "all_adults",
+  main_group_tooltip_label = "All adults",
+  wrap_width = 35,
+  comparison_group_1 = "16_24",
+  comparison_group_1_tooltip_label = "Adults aged 16-24",
+  y_limits = c(0, 100),
+  number_of_rows = 2
+)
+
+p4 <- plot_vertical_bar_grouped(
+  data = data %>% filter(screen_type == "Out of home (on smartphone)"),
+  screen_var = "screen_type",
+  content_var = "film_type",
+  y_var = "percentage",
+  groups = "age_group",
+  main_group = "all_adults",
+  main_group_tooltip_label = "All adults",
+  wrap_width = 35,
+  comparison_group_1 = "16_24",
+  comparison_group_1_tooltip_label = "Adults aged 16-24",
+  y_limits = c(0, 100),
+  number_of_rows = 2
+)
+
+is_html <- knitr::is_html_output()
+
+if (!is_html) {
+
+  combined <- (p1 | p2) / (p3 | p4) + 
+  plot_annotation(
+    title = "Where do film viewers watch different types of film?",
+    subtitle = "Those watching film type in past 12 months, % who viewed film type by location and method, all adults versus those <span style='color:#e50076'>aged 16-24</span>."
+  ) & 
+  theme(
+    plot.title = element_markdown(size = 16),
+    plot.subtitle = element_markdown(size = 16 * 0.8)
+  )
+
+  plot(combined)
+
+} else {
+
+  htmltools::tagList(
+    htmltools::div(
+      style = "
+        text-align: left;
+        margin-top: 40px;
+        margin-left: 45px;
+        font-family: 'Source Sans 3', sans-serif;
+        ",
+      htmltools::tags$div(
+        style = "
+          font-size: 18px;
+          font-weight: 400;
+          ",
+        "Where do film viewers watch different types of film?",
+      ),
+      htmltools::tags$div(
+        style = "font-size: 14px; opacity: 0.8;", 
+        "Those watching film type in past 12 months, % who viewed film type by location and method, all adults versus those ", 
+        htmltools::HTML(paste0(
+          htmltools::tags$span(style = "color:#e50076;", "aged 16-24"), "."))
+      ),
+    ),
+    htmltools::div(
+      style = "display:flex; gap:10px;",
+      p1,
+      p2
+    ),
+    htmltools::div(
+      style = "display:flex; gap:10px;",
+      p3,
+      p4
+    )
+  )
+}
+```
+
+## ‘Distraction’ is a key driver for smartphone engagement
+Our core questionnaire asked respondents to select up to five reasons why they choose to engage with different types of content on various screens and devices. For all forms of content, the primary driver of engagement is “fun/entertainment” -- a selection of results is shown in @fig-need-states. In the graph we see that while audiences might turn to films on the big screen for "immersion" in a story or setting, a key driver of engagement with short-form video and films viewed on smartphones is to “relieve boredom”. This is the case for all adults and more so for those aged 16--24.
+
+<div aria-label="Figure 7 is an interactive plot. Two line charts compare 16–24s (top) and all adults (bottom) across need states by watch method. For both groups, entertainment/fun is the strongest need across methods. Short‑form video on social media tends to score higher than other methods for the need states ‘to relieve boredom’, ‘to be distracted’ and because ‘it’s a habit’. Films on the big screen and at home on TV perform relatively better for immersive/story‑driven needs. Patterns for all adults are similar but with lower peaks for smartphones."></div>
+
+```{r}
+#| label: fig-need-states
+#| fig-cap: While audiences might turn to films on the big screen to immerse themselves in a story or setting, a key driver of engagement with short-form video and films viewed on smartphones is to “relieve boredom”.
+#| fig-width: 12
+#| fig-height: 6
+#| fig-align: center
+#| fig-dpi: 150
+#| column: page
+
+sheet_name <- "fig-need-states"
+data <- load_data()
+
+plot_film_by_need_states(
+  data = data,
+  need_var = "need_states",
+  age_var = "age_group",
+  title = "Screen content engagement need states",
+  subtitle = "% agreeing with each statement.",
+  geom_type = "line",
+  y_limits = c(0, 75),
+)
+```
+
+Younger adults are also more likely than all adults to say that they watch short-form video for “distraction” or out of “habit”, whereas they are more likely to watch films on the big screen for “connection with others” (@fig-need-states-diff).
+
+<div aria-label="Figure 8 is an interactive plot. Line chart of percentage‑point difference between 16–24s and all adults agreeing with various ‘need states’ for different watch methods. Short‑form content (light grey) tends to index positively for several needs (e.g., to relieve boredom, to be distracted, out of habit), while films on the big screen (blue) and on TV at home (dark grey) are closer to parity. A notable peak for films on the big screen appears for the need state, ‘to connect with others’."></div>
+
+```{r}
+#| label: fig-need-states-diff
+#| fig-cap: Younger adults are more likely than all adults to say that they watch short-form video for “distraction” or out of “habit”.
+#| fig-width: 12
+#| fig-height: 6
+#| fig-align: center
+#| fig-dpi: 150
+#| column: page
+
+sheet_name <- "fig-need-states"
+data <- load_data()
+
+plot_film_by_need_states(
+  data = data,
+  need_var = "need_states",
+  age_var = "age_group",
+  difference = TRUE,
+  title = "Screen content engagement need states",
+  subtitle = "Percentage point (pp) difference in % agreeing with each statement, 16-24-year-olds versus all adults.",
+  geom_type = "line",
+  y_limits = c(-20, 20),
+)
+```
+
+Cinema as a social space and a place to connect with friends and family came through elsewhere in our survey, when respondents were asked about their top reasons for past cinema visits. As a "social outing" is the top reason for all adults, but more so for young adults (62% versus 53%). Those aged 16--24 are also more likely to have gone to the cinema “to see a film people were talking about”, which also speaks to a desire to connect and be part of a conversation or cultural moment (@fig-drivers).
+
+<div aria-label="Figure 9 is an interactive plot. Horizontal bar chart comparing all adults (grey bars) with 16–24s (pink markers) on reasons for visiting the cinema. ‘As a social outing’ is the top reason (53% adults, 62% 16–24). 16–24s are more likely than adults to cite word‑of‑mouth (38% vs 26%), a special treat (37% vs 32%), spoilers avoidance and wellbeing (both ~19% vs ~12–13%), and exclusivity (22% vs 18%); less likely to say ‘needs a big screen’ (29% vs 42%) or ‘for a child’ (5% vs 18%)."></div>
+
+```{r}
+#| label: fig-drivers
+#| fig-cap: When asked about top reasons for past cinema visits, the most popular driver, a “social outing”, was mentioned by 62% of young adults compared with 53% of all adults.
+#| fig-width: 12
+#| fig-height: 8
+#| fig-align: center
+#| fig-dpi: 150
+#| column: page
+
+sheet_name <- "fig-drivers"
+data <- load_data()
+
+plot_horizontal_bar (
+  data = data,
+  category_var = "drivers",      
+  value_var = "all_adults",
+  comparison_var = "16_24",
+  value_var_tooltip_label = "All adults",
+  comparison_var_tooltip_label = "Adults aged 16-24",            
+  keyword = NULL,       
+  highlight_color = "#e50076",  
+  base_color = "grey70",        
+  title = "Top reasons for visiting the cinema",
+  subtitle = "% of all adults and those <span style='color:#e50076'>aged 16-24</span>.",
+  label_format = scales::comma,
+  wrap_width = 40
+)
+```
+
+## What does the smartphone generation want?
+Our Audience Screen Engagement Tracker captures the impact smartphones are having on what adults are choosing to watch, how they are choosing to watch, and why. The impact is more pronounced among younger adults, and we see further evidence for this in their stated attitudes to screen content (@fig-statements).
+
+From our dedicated survey module, we learn that a majority of 16--24-year-olds now choose to watch films and TV programmes with subtitles switched on, a finding seen in other studies and which is hypothesised to be driven both by an increase in dual-screening behaviours and by the widespread use of text captions in social media videos. The popularity of social media and other forms of creator content might also explain why 47% of young adults say they expect screen content to be “relevant, personalised and meaningful to me”.
+
+Despite living in an era of content abundance, 48% of 16--24-year-olds say they want “more screen content choices”. Seemingly infinite social media feeds have not conditioned all younger adults to expect screen content to be free, although 25% do so. Nor do young adults see film clips on social media as a replacement for the full feature-length movie experience – two-thirds disagree with the idea that they do not need to watch films anymore because they have seen so many snippets on social media. And, by and large, young audiences are in agreement with current cinema etiquette – only 14% would like a more relaxed approach to behaviours such as talking and using smartphones during screenings.
+
+But our survey sounds a note of caution for filmmakers: roughly as many young adults agree as disagree that shorter forms of content, such as social media videos, are more engaging than movies.
+
+<div aria-label="Figure 10 is an interactive plot. Diverging bars for agree vs disagree among 16–24s. The highest agreement is with ‘I use subtitles/closed captioning’ (58% agree), ‘Streaming services are good value’ (56%), and ‘I want more screen content choices’ (48%). Around a third agree that shorter content is more engaging than films (36%) and that other live events offer better value than the cinema (34%). Fewer agree that they expect all content to be free (25%), that they lack time for films (28%), or that clips on TikTok/YouTube mean they don’t need to watch films (18%)."></div>
+
+```{r}
+#| label: fig-statements
+#| fig-cap: A majority of 16--24-year-olds now choose to watch films and TV programmes with subtitles switched on, and 47% say they expect screen content to be “relevant, personalised and meaningful to me”. Note, the chart does not show "don't know" and "neither agree nor disagree" responses.
+#| fig-width: 12
+#| fig-height: 8
+#| fig-align: center
+#| fig-dpi: 150
+#| column: page
+
+sheet_name <- "fig-statements"
+data <- load_data()
+
+plot_diverging_bar (
+  data = data,
+  category_var = "statements",      
+  agree_var = "agree",
+  disagree_var = "disagree",                    
+  title = "Attitudes to screen content",
+  subtitle = "% of adults aged 16-24 <span style='color:#1197FF'>disagreeing</span> or <span style='color:#e50076'>agreeing</span> with each statement.",
+  wrap_width = 50
+)
+```
+
+::: {.content-visible when-format="html"}
+## Download the data
+Source data for all graphs and tables in this report are available for [download in ODS format](https://core-cms.bfi.org.uk/media/44159/download).
+:::
+
+## About the survey
+With a nationally representative sample of more than 12,000 respondents, four waves of the BFI's Audience Screen Engagement Tracker have been completed with partner research agency YouGov. The first wave took place at the end of 2019, before the COVID-19 pandemic. The second was conducted in November 2020, taking in the continued impact of the pandemic from March to November 2020. Fieldwork for the third tracking study was undertaken in the first half of July 2022, a post-pandemic period selected in part to ensure measurement of a full 12-month period of a fully open theatrical landscape.
+ 
+The fieldwork for most recent fourth wave took place during the second half of March 2025. This latest wave of the ongoing study also delivered a supplementary module which explored, in greater depth, the screen-based behaviours, drivers, barriers, and attitude of more than 500 young adults aged 16--24. Fieldwork for this module took place during the second half of August 2025. 
+
+The primary goals of the fourth wave of the Audience Screen Engagement Tracker are to deliver:
+ 
+*	Up-to-date behavioural, motivational, and attitudinal benchmark metrics on how audiences are engaging with screens and screen content, building on previous BFI audience research.
+*	Robust audience insight across screen venues and formats – at home, out of home, physical, digital, and new and emerging technologies – that can be used by the screen sector to inform decision-making and policy interventions.
+*	Metrics at a statistically robust level across a broad range of demographics, UK nation and English region-based cohorts, and BFI’s inclusion target groups.
+
+The Audience Screen Engagement Tracker was commissioned through the BFI Research and Statistics Fund, awarding National Lottery funding.
+
+## About the BFI
+The BFI is the lead organisation for film and the moving image in the UK. Founded in 1933, it is a registered charity governed by Royal Charter. In 2011, it was given additional responsibilities, becoming a Government arm’s-length body and distributor of National Lottery funds for film, widening its strategic focus.
+
+The BFI now combines a cultural, creative and industrial role. This brings together activities including the BFI National Archive, distribution, cultural programming, publishing and festivals with Lottery investment for film production, distribution, education, audience development and market intelligence and research. Find out more about the BFI’s mission at [bfi.org.uk](https://www.bfi.org.uk/about-bfi).
+
+The BFI Board of Governors is chaired by Jay Hunt OBE.
+
+::: {.content-visible when-format="html"}
+![](../../typst_output/bfi_nl_logo.png){fig-align="center" height="2cm"}
+:::

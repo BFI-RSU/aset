@@ -1,0 +1,5 @@
+typography:
+  fonts:
+    - family: "Source Sans 3"
+      source: google
+  base: "Source Sans 3"
