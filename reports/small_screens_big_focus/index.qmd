@@ -1,7 +1,7 @@
 ---
 title: "Small screens, big focus"
 subtitle: "How mobile devices are (re)shaping screen engagement"
-description: "In this report, we explore how the proliferation of mobile devices is changing UK adults’ relationship with screen content and what role smartphones play in a landscape previously dominated by cinema and TV screens."
+description: "In this report, we explore how the proliferation of mobile devices is changing UK adults’ relationship with screen content, and the role smartphones play in a landscape previously dominated by cinema and TV screens."
 author: Paul McEvoy and Brian Tarran
 date: 5/11/2026
 date-format: long
@@ -93,7 +93,7 @@ library(dplyr)
 ```{r}
 #| label: set-file-path
 
-file_path <- here::here('../../data/small_screen_data_final.xlsx')
+file_path <- here::here('data/small_screen_data_final.xlsx')
 
 ```
 
