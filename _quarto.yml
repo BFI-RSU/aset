@@ -17,6 +17,13 @@ website:
         text: Reports
       - href: about.qmd
         text: About
+  page-footer:
+    center:
+      - href: https://github.com/BFI-RSU/aset
+        icon: github
+        aria-label: GitHub
+      - text: "bfi.org.uk/industry-data-insights"
+        href: https://www.bfi.org.uk/industry-data-insights
 
 format:
   html:

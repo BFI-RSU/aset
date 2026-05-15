@@ -1,7 +1,8 @@
 ---
-title: "About the survey"
+pagetitle: "About the survey"
+toc: true
 ---
-
+## About the survey
 With a nationally representative sample of more than 12,000 respondents, four waves of the BFI's Audience Screen Engagement Tracker have been completed with partner research agency YouGov. The first wave took place at the end of 2019, before the COVID-19 pandemic. The second was conducted in November 2020, taking in the continued impact of the pandemic from March to November 2020. Fieldwork for the third tracking study was undertaken in the first half of July 2022, a post-pandemic period selected in part to ensure measurement of a full 12-month period of a fully open theatrical landscape.
  
 The fieldwork for most recent fourth wave took place during the second half of March 2025. This latest wave of the ongoing study also delivered a supplementary module which explored, in greater depth, the screen-based behaviours, drivers, barriers, and attitude of more than 500 young adults aged 16--24. Fieldwork for this module took place during the second half of August 2025. 
@@ -15,3 +16,14 @@ The primary goals of the fourth wave of the Audience Screen Engagement Tracker a
 The Audience Screen Engagement Tracker was commissioned through the BFI Research and Statistics Fund, awarding National Lottery funding.
 
 ![](typst_output/bfi_nl_logo.png){fig-align="center" height="2cm"}
+
+## About the BFI Research and Statistics Unit
+The BFI Research and Statistics Unit produces research, data and market intelligence on the UK film industry and other screen sectors. Our activities are supported by the BFI National Lottery Research and Statistics Fund. The objectives of the fund are to:
+
+* increase and improve the quality and impact of evidence underpinning decisions on the future of the sector – their culture, practice and economic and policy needs;
+* provide users from industry, government and academia with instant access to statistics, analysis and research resources;
+* address a series of key research priorities for the screen sectors;
+* foster strategic collaboration between public policy-makers, industry, academia and wider screen-sector stakeholders;
+* distribute findings so they are available for stakeholders and the public.
+
+See the [industry data and insights](https://www.bfi.org.uk/industry-data-insights) page on the [BFI website](https://www.bfi.org.uk/) for further details.
