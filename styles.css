@@ -70,6 +70,7 @@ figure>figcaption.quarto-float-caption-bottom {
   color: #e50076 !important;
 }
 
+
 /*-- revealjs --*/
 
 .reveal .slide-logo {
@@ -78,4 +79,11 @@ figure>figcaption.quarto-float-caption-bottom {
   top: 16px !important;
   left: 16px !important;
   max-height: 120px !important;
+}
+
+
+/*-- Footer --*/
+
+.nav-footer a:hover, .nav-footer p:hover {
+  color: #e50076;
 }
